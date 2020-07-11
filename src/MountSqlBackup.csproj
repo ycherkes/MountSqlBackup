@@ -35,12 +35,11 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DokanNet, Version=1.0.8.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>binaries\DokanNet.dll</HintPath>
+    <Reference Include="DokanNet">
+      <HintPath>..\binaries\DokanNet.dll</HintPath>
     </Reference>
-    <Reference Include="PowerCollections, Version=1.0.2141.24679, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Stakata.Wintellect.PowerCollections.1.0.4\lib\net20\PowerCollections.dll</HintPath>
+    <Reference Include="PowerCollections">
+      <HintPath>packages\Stakata.Wintellect.PowerCollections.1.0.4\lib\net20\PowerCollections.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -50,9 +49,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="YCherkes.SqlBackupReader, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>binaries\YCherkes.SqlBackupReader.dll</HintPath>
+    <Reference Include="YCherkes.SqlBackupReader">
+      <HintPath>..\binaries\YCherkes.SqlBackupReader.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -67,10 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Readme.md" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="binaries\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
