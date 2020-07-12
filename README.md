@@ -6,21 +6,21 @@ It uses a demo version of [YCherkes.SqlBackupReader](https://github.com/ycherkes
 
 ## Installation
 
-	* Install Dokany: [DokanSetup_redist.exe](https://github.com/dokan-dev/dokany/releases/download/v1.4.0.1000/DokanSetup_redist.exe)
-	* Build the MountSqlBackup sources or download the [release](https://github.com/ycherkes/MountSqlBackup/releases)
+* Install Dokany: [DokanSetup_redist.exe](https://github.com/dokan-dev/dokany/releases/download/v1.4.0.1000/DokanSetup_redist.exe)
+* Build the MountSqlBackup sources or download the [release](https://github.com/ycherkes/MountSqlBackup/releases)
 
 ## Usage
 
-	* Run mountbck.exe as described below:
-		* mountbck.exe <DriveLetter> <BackupPath>
-		* both parameters are mandatory
-		* example: mountbck.exe S C:\Temp\AdventureWorks2014.bak
-	* Go to mounted drive (in example it's a drive S:)
-	* Double click on S:\AttachDb.sql - Sql Server Managemant Studio will open this file
-	* Press F5, or click Execute button
-	* Before you close the mountbck.exe, don't forget to detach a database:
-		* uncomment "Detaching Db..." block of AttachDb.sql (Select it and press Ctrl + K + U)
-		* Press F5, or click Execute button (only "Detaching Db..." block must be selected)
+* Run mountbck.exe as described below:
+	* mountbck.exe <DriveLetter> <BackupPath>
+	* both parameters are mandatory
+	* example: mountbck.exe S C:\Temp\AdventureWorks2014.bak
+* Go to mounted drive (in example it's a drive S:)
+* Double click on S:\AttachDb.sql - Sql Server Managemant Studio will open this file
+* Press F5, or click Execute button
+* Before you close the mountbck.exe, don't forget to detach a database:
+	* uncomment "Detaching Db..." block of AttachDb.sql (Select it and press Ctrl + K + U)
+	* Press F5, or click Execute button (only "Detaching Db..." block must be selected)
 
 ## Features
 
