@@ -14,10 +14,7 @@ It uses a demo version of [YCherkes.SqlBackupReader](https://github.com/ycherkes
 	* Run mountbck.exe as described below:
 		* mountbck.exe <DriveLetter> <BackupPath>
 		* both parameters are mandatory
-		* example: 
-```Batchfile
-mountbck.exe S C:\Temp\AdventureWorks2014.bak
-```
+		* example: mountbck.exe S C:\Temp\AdventureWorks2014.bak
 	* Go to mounted drive (in example it's a drive S:)
 	* Double click on S:\AttachDb.sql - Sql Server Managemant Studio will open this file
 	* Press F5, or click Execute button
