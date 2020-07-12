@@ -19,7 +19,7 @@ It uses a demo version of [YCherkes.SqlBackupReader](https://github.com/ycherkes
 * Double click on S:\AttachDb.sql - Sql Server Managemant Studio will open this file
 * Press F5, or click Execute button
 * Before you close (Ctrl+C) the mountbck.exe, don't forget to detach a database:
-	* uncomment "Detaching Db..." block of AttachDb.sql (Select it and press Ctrl + K + U)
+	* Uncomment "Detaching Db..." block of AttachDb.sql (Select it and press Ctrl + K + U)
 	* Press F5, or click Execute button (only "Detaching Db..." block must be selected)
 
 ## Features
