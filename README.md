@@ -1,6 +1,6 @@
 # MountSqlBackup
 
-MountSqlBackup is an open-source tool which allows to attach an SQL Server Database backup to the SQL Server directly without backup-restore operation.
+MountSqlBackup is an open-source command line tool which allows to attach an SQL Server Database backup to the SQL Server directly without backup-restore operation.
 
 It uses a demo version of [YCherkes.SqlBackupReader](https://github.com/ycherkes/YCherkes.SqlBackupReader.Demo) (it's free for non-commercial purposes)
 
