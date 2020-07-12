@@ -110,7 +110,7 @@ GO
             return Path.Combine(_path, fileName.TrimStart('\\'));
         }
 
-        private static string ToTrace(DokanFileInfo info)
+        private static string ToTrace(IDokanFileInfo info)
         {
             var context = info.Context != null ? "<" + info.Context.GetType().Name + ">" : "<null>";
 
@@ -123,7 +123,7 @@ GO
             return date.HasValue ? date.Value.ToString(CultureInfo.CurrentCulture) : "<null>";
         }
 
-        private static NtStatus Trace(string method, string fileName, DokanFileInfo info, NtStatus result, params string[] parameters)
+        private static NtStatus Trace(string method, string fileName, IDokanFileInfo info, NtStatus result, params string[] parameters)
         {
             var extraParameters = parameters != null && parameters.Length > 0 ? ", " + string.Join(", ", parameters) : string.Empty;
 
@@ -135,7 +135,7 @@ GO
             return result;
         }
 
-        private NtStatus Trace(string method, string fileName, DokanFileInfo info,
+        private NtStatus Trace(string method, string fileName, IDokanFileInfo info,
                                   FileAccess access, FileShare share, FileMode mode, FileOptions options, FileAttributes attributes,
                                   NtStatus result)
         {
@@ -150,7 +150,7 @@ GO
         #region Implementation of IDokanOperations
 
         public NtStatus CreateFile(string fileName, FileAccess access, FileShare share, FileMode mode, FileOptions options, FileAttributes attributes,
-                                      DokanFileInfo info)
+                                      IDokanFileInfo info)
         {
 
             if (info.IsDirectory && mode == FileMode.CreateNew)
@@ -226,7 +226,7 @@ GO
             return Trace("CreateFile", fileName, info, access, share, mode, options, attributes, DokanResult.Success);
         }
 
-        public void Cleanup(string fileName, DokanFileInfo info)
+        public void Cleanup(string fileName, IDokanFileInfo info)
         {
 #if TRACE
             if (info.Context != null)
@@ -239,7 +239,7 @@ GO
             Trace("Cleanup", fileName, info, DokanResult.Success);
         }
 
-        public void CloseFile(string fileName, DokanFileInfo info)
+        public void CloseFile(string fileName, IDokanFileInfo info)
         {
 #if TRACE
             if (info.Context != null)
@@ -252,7 +252,7 @@ GO
             Trace("CloseFile", fileName, info, DokanResult.Success);
         }
 
-        public NtStatus ReadFile(string fileName, byte[] buffer, out int bytesRead, long offset, DokanFileInfo info)
+        public NtStatus ReadFile(string fileName, byte[] buffer, out int bytesRead, long offset, IDokanFileInfo info)
         {
             if (!(info.Context is FileContainer))
             {
@@ -293,7 +293,7 @@ GO
             return Trace("ReadFile", fileName, info, DokanResult.Success, "out " + bytesRead, offset.ToString(CultureInfo.InvariantCulture));
         }
 
-        public NtStatus WriteFile(string fileName, byte[] buffer, out int bytesWritten, long offset, DokanFileInfo info)
+        public NtStatus WriteFile(string fileName, byte[] buffer, out int bytesWritten, long offset, IDokanFileInfo info)
         {
             if (!(info.Context is FileContainer))
             {
@@ -321,12 +321,12 @@ GO
             return Trace("WriteFile", fileName, info, DokanResult.Success, "out " + bytesWritten, offset.ToString(CultureInfo.InvariantCulture));
         }
 
-        public NtStatus FlushFileBuffers(string fileName, DokanFileInfo info)
+        public NtStatus FlushFileBuffers(string fileName, IDokanFileInfo info)
         {
             return Trace("FlushFileBuffers", fileName, info, DokanResult.Success);
         }
 
-        public NtStatus GetFileInformation(string fileName, out FileInformation fileInfo, DokanFileInfo info)
+        public NtStatus GetFileInformation(string fileName, out FileInformation fileInfo, IDokanFileInfo info)
         {
             var path = GetPath(fileName);
 
@@ -356,7 +356,7 @@ GO
             return Trace("GetFileInformation", fileName, info, DokanResult.Success);
         }
 
-        public NtStatus FindFiles(string fileName, out IList<FileInformation> files, DokanFileInfo info)
+        public NtStatus FindFiles(string fileName, out IList<FileInformation> files, IDokanFileInfo info)
         {
             files = new List<FileInformation>();
 
@@ -370,17 +370,24 @@ GO
             return Trace("FindFiles", fileName, info, DokanResult.Success);
         }
 
-        public NtStatus SetFileAttributes(string fileName, FileAttributes attributes, DokanFileInfo info)
+        public NtStatus FindFilesWithPattern(string fileName, string searchPattern, out IList<FileInformation> files, IDokanFileInfo info)
+        {
+            files = null;
+            return Trace("FindFilesWithPattern", fileName, info, DokanResult.NotImplemented);
+        }
+
+        public NtStatus SetFileAttributes(string fileName, FileAttributes attributes, IDokanFileInfo info)
         {
             return Trace("SetFileAttributes", fileName, info, DokanResult.NotImplemented, attributes.ToString());
         }
 
-        public NtStatus SetFileTime(string fileName, DateTime? creationTime, DateTime? lastAccessTime, DateTime? lastWriteTime, DokanFileInfo info)
+        public NtStatus SetFileTime(string fileName, DateTime? creationTime, DateTime? lastAccessTime, DateTime? lastWriteTime,
+            IDokanFileInfo info)
         {
             return Trace("SetFileTime", fileName, info, DokanResult.NotImplemented, ToTrace(creationTime), ToTrace(lastAccessTime), ToTrace(lastWriteTime));
         }
 
-        public NtStatus DeleteFile(string fileName, DokanFileInfo info)
+        public NtStatus DeleteFile(string fileName, IDokanFileInfo info)
         {
             var path = GetPath(fileName);
 
@@ -394,17 +401,17 @@ GO
             return Trace("DeleteFile", fileName, info, DokanResult.Success);
         }
 
-        public NtStatus DeleteDirectory(string fileName, DokanFileInfo info)
+        public NtStatus DeleteDirectory(string fileName, IDokanFileInfo info)
         {
             return Trace("DeleteDirectory", fileName, info, _files.Any() ? DokanResult.DirectoryNotEmpty : DokanResult.Success);
         }
 
-        public NtStatus MoveFile(string oldName, string newName, bool replace, DokanFileInfo info)
+        public NtStatus MoveFile(string oldName, string newName, bool replace, IDokanFileInfo info)
         {
             return Trace("MoveFile", oldName, info, DokanResult.NotImplemented, newName, replace.ToString(CultureInfo.InvariantCulture));
         }
 
-        public NtStatus SetEndOfFile(string fileName, long length, DokanFileInfo info)
+        public NtStatus SetEndOfFile(string fileName, long length, IDokanFileInfo info)
         {
             try
             {
@@ -431,7 +438,7 @@ GO
             }
         }
 
-        public NtStatus SetAllocationSize(string fileName, long length, DokanFileInfo info)
+        public NtStatus SetAllocationSize(string fileName, long length, IDokanFileInfo info)
         {
             try
             {
@@ -458,7 +465,7 @@ GO
             }
         }
 
-        public NtStatus LockFile(string fileName, long offset, long length, DokanFileInfo info)
+        public NtStatus LockFile(string fileName, long offset, long length, IDokanFileInfo info)
         {
             try
             {
@@ -470,7 +477,7 @@ GO
             }
         }
 
-        public NtStatus UnlockFile(string fileName, long offset, long length, DokanFileInfo info)
+        public NtStatus UnlockFile(string fileName, long offset, long length, IDokanFileInfo info)
         {
             try
             {
@@ -482,7 +489,7 @@ GO
             }
         }
 
-        public NtStatus GetDiskFreeSpace(out long free, out long total, out long used, DokanFileInfo info)
+        public NtStatus GetDiskFreeSpace(out long free, out long total, out long used, IDokanFileInfo info)
         {
             var diskInfo = DriveInfo.GetDrives().Single(di => di.RootDirectory.Name == Path.GetPathRoot(_path + "\\"));
 
@@ -494,10 +501,11 @@ GO
         }
 
         public NtStatus GetVolumeInformation(out string volumeLabel, out FileSystemFeatures features,
-                                                out string fileSystemName, DokanFileInfo info)
+                                                out string fileSystemName, out uint maximumComponentLength, IDokanFileInfo info)
         {
-            volumeLabel = "DOKAN";
-            fileSystemName = "DOKAN";
+            volumeLabel = "MountSqlBackup";
+            fileSystemName = "MountSqlBackup";
+            maximumComponentLength = 255;
 
             features = FileSystemFeatures.CasePreservedNames | FileSystemFeatures.CaseSensitiveSearch |
                        FileSystemFeatures.PersistentAcls | FileSystemFeatures.SupportsRemoteStorage |
@@ -506,23 +514,28 @@ GO
             return Trace("GetVolumeInformation", null, info, DokanResult.Success, "out " + volumeLabel, "out " + features, "out " + fileSystemName);
         }
 
-        public NtStatus GetFileSecurity(string fileName, out FileSystemSecurity security, AccessControlSections sections, DokanFileInfo info)
+        public NtStatus GetFileSecurity(string fileName, out FileSystemSecurity security, AccessControlSections sections, IDokanFileInfo info)
         {
             security = new FileSecurity();
             return Trace("GetFileSecurity", fileName, info, DokanResult.NotImplemented, sections.ToString());
         }
 
-        public NtStatus SetFileSecurity(string fileName, FileSystemSecurity security, AccessControlSections sections, DokanFileInfo info)
+        public NtStatus SetFileSecurity(string fileName, FileSystemSecurity security, AccessControlSections sections, IDokanFileInfo info)
         {
             return Trace("SetFileSecurity", fileName, info, DokanResult.NotImplemented, sections.ToString());
         }
 
-        public NtStatus Unmount(DokanFileInfo info)
+        public NtStatus Mounted(IDokanFileInfo info)
         {
-            return Trace("Unmount", null, info, DokanResult.Success);
+            return Trace("Mounted", null, info, DokanResult.Success);
         }
 
-        public NtStatus FindStreams(string fileName, out IList<FileInformation> streams, DokanFileInfo info)
+        public NtStatus Unmounted(IDokanFileInfo info)
+        {
+            return Trace("Unmounted", null, info, DokanResult.Success);
+        }
+
+        public NtStatus FindStreams(string fileName, out IList<FileInformation> streams, IDokanFileInfo info)
         {
             streams = new FileInformation[0];
             return Trace("EnumerateNamedStreams", fileName, info, DokanResult.NotImplemented);
