@@ -12,7 +12,7 @@ It uses a demo version of [YCherkes.SqlBackupReader](https://github.com/ycherkes
 ## Usage
 
 * Run mountbck.exe as described below:
-	* mountbck.exe <DriveLetter> <BackupPath>
+	* mountbck.exe DriveLetter BackupPath
 	* both parameters are mandatory
 	* example: ```mountbck.exe S C:\Temp\AdventureWorks2014.bak```
 * Go to mounted drive (in example it's a drive S:)
