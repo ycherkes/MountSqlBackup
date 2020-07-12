@@ -18,16 +18,16 @@ It uses a demo version of [YCherkes.SqlBackupReader](https://github.com/ycherkes
 	* Go to mounted drive (in example it's a drive S:)
 	* Double click on S:\AttachDb.sql - Sql Server Managemant Studio will open this file
 	* Press F5, or click Execute button
-	* Before you stop the mountbck.exe, dont' forget to detach a database
+	* Before you close the mountbck.exe, don't forget to detach a database:
 		* uncomment "Detaching Db..." block of AttachDb.sql (Select it and press Ctrl + K + U)
 		* Press F5, or click Execute button (only "Detaching Db..." block must be selected)
 
 ## Features
 
 * Supported backup formats:
-  * Uncompressed SQL Server Full Db backups (more informations please read here [YCherkes.SqlBackupReader](https://github.com/ycherkes/YCherkes.SqlBackupReader.Demo))
+  * Uncompressed SQL Server Full Db backups (more informations please read here: [YCherkes.SqlBackupReader](https://github.com/ycherkes/YCherkes.SqlBackupReader.Demo))
 * Limitations:
-  * Databases with Memory-Optimized Tables are not supported (because SQL Server doesn't allow to rebuild the log on this kind of Db)
+  * Databases with Memory-Optimized Tables are not supported (because SQL Server doesn't allow to rebuild the log for this kind of Db)
 
 # Bug Report
 
