@@ -100,11 +100,6 @@ GO
             };
         }
 
-        //private static string GenerateDataFileName(int index)
-        //{
-        //    return "Data_" + index + (index == 0 ? ".mdf" : ".ndf");
-        //}
-
         private string GetPath(string fileName)
         {
             return Path.Combine(_path, fileName.TrimStart('\\'));
@@ -135,7 +130,7 @@ GO
             return result;
         }
 
-        private NtStatus Trace(string method, string fileName, IDokanFileInfo info,
+        private static NtStatus Trace(string method, string fileName, IDokanFileInfo info,
                                   FileAccess access, FileShare share, FileMode mode, FileOptions options, FileAttributes attributes,
                                   NtStatus result)
         {
@@ -263,30 +258,6 @@ GO
 
             var containerFile = (FileContainer)info.Context;
 
-            //if (containerFile.OverWrittenData.TryGetValue(new Range(offset), out var result))
-            //{
-            //    bytesRead = buffer.Length;
-            //    Array.Copy(result, buffer, bytesRead);
-            //}
-            //else
-            //{
-            //    bytesRead = 0;
-            //    if(new[]{".mdf", "'ndf"}.Contains(Path.GetExtension(containerFile.FileInformation.FileName)))
-            //    {
-            //        do
-            //        {
-            //            containerFile.DataStream.Seek(offset + bytesRead, SeekOrigin.Begin);
-            //            bytesRead += containerFile.DataStream.Read(buffer, bytesRead,
-            //                buffer.Length - bytesRead > 8192 ? 8192 : buffer.Length - bytesRead);
-            //        } while (buffer.Length - bytesRead > 0);
-            //    }
-            //    else
-            //    {
-            //        containerFile.DataStream.Seek(offset, SeekOrigin.Begin);
-            //        bytesRead += containerFile.DataStream.Read(buffer, 0, buffer.Length);
-            //    }
-            //}
-
             containerFile.DataStream.Seek(offset, SeekOrigin.Begin);
             bytesRead = containerFile.DataStream.Read(buffer, 0, buffer.Length);
 
@@ -304,20 +275,11 @@ GO
 
             var containerFile = (FileContainer)info.Context;
 
-            //if (new[] { ".mdf", "'ndf" }.Contains(Path.GetExtension(containerFile.FileInformation.FileName)))
-            //{
-            //    var range = new Range(offset) {To = offset + buffer.Length - 1};
-            //    containerFile.OverWrittenData[range] = (byte[])buffer.Clone();
-            //}
-            //else
-            //{
-            //    containerFile.DataStream.Seek(offset, SeekOrigin.Begin);
-            //    containerFile.DataStream.Write(buffer, 0, buffer.Length);
-            //}
             containerFile.DataStream.Seek(offset, SeekOrigin.Begin);
             containerFile.DataStream.Write(buffer, 0, buffer.Length);
 
             bytesWritten = buffer.Length;
+
             return Trace("WriteFile", fileName, info, DokanResult.Success, "out " + bytesWritten, offset.ToString(CultureInfo.InvariantCulture));
         }
 
