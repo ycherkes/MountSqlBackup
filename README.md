@@ -7,7 +7,7 @@ It uses a demo version of [YCherkes.SqlBackupReader](https://github.com/ycherkes
 ## Installation
 
 	* Install Dokany (I developed this tool with https://github.com/dokan-dev/dokany/releases/download/v1.4.0.1000/DokanSetup_redist.exe installed)
-	* Build the MountSqlBackup sources or download the release archive https://github.com/ycherkes/MountSqlBackup/releases/tag/1.0.0.0
+	* Build the MountSqlBackup sources or download the release archive https://github.com/ycherkes/MountSqlBackup/releases
 
 ## Usage	
 	
