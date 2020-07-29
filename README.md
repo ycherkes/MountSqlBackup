@@ -28,6 +28,7 @@ It uses a demo version of [YCherkes.SqlBackupReader](https://github.com/ycherkes
   * Uncompressed SQL Server Full Db backups (more informations please read here: [YCherkes.SqlBackupReader](https://github.com/ycherkes/YCherkes.SqlBackupReader.Demo))
 * Limitations:
   * Databases with Memory-Optimized Tables are not supported (because SQL Server doesn't allow to rebuild the log for this kind of Db)
+  * This tool uses only data (mdf/ndf) files, so be careful - you can read inconstistent data, because log file was rebuilt.
 
 # Bug Report
 
